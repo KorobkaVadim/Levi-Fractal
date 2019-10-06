@@ -3,8 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>Levy C Curve</title>
+    <style>
+      button:disabled {
+        background-color: darkgray;
+      }
+    </style>
   </head>
   <body>
+    <form id="depth-form">
+      <label for="depth">Depth of recursion</label>
+      <input type="number" id="depth" value="17" min="5" max="20" placeholder="Depth of recursion" />
+      <button type="submit">Draw</button>
+    </form>
     <canvas id="plot"></canvas>
     <script src="./dist/renderer.js"></script>
   </body>

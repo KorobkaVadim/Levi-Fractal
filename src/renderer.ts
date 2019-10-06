@@ -9,7 +9,7 @@ const COS_OF_BASE_ANGLE = Math.cos(BASE_ANGLE)
 const SIN_OF_BASE_ANGLE = Math.sin(BASE_ANGLE)
 
 const c_curve = (context: CanvasRenderingContext2D, depth: number, x0: number, y0: number, x1: number, y1: number) => {
-  if (depth == 0) {
+  if (depth <= 0) {
     context.moveTo(x0, y0)
     context.strokeStyle = `#${getRandomIntInclusive().toString(16)}`
     context.lineTo(x1, y1)
@@ -17,6 +17,7 @@ const c_curve = (context: CanvasRenderingContext2D, depth: number, x0: number, y
       context.stroke()
       context.beginPath()
     }
+    return
   }
 
   const xx = COS_OF_BASE_ANGLE * ((x1 - x0) * COS_OF_BASE_ANGLE - (y1 - y0) * SIN_OF_BASE_ANGLE) + x0
@@ -27,16 +28,39 @@ const c_curve = (context: CanvasRenderingContext2D, depth: number, x0: number, y
   }, 100)
 }
 
+const draw = (depth: number) => {
+  const canvas = <HTMLCanvasElement>document.getElementById('plot')
+  const context = canvas.getContext('2d')
+  canvas.width = 800
+  canvas.height = 800
+  context.beginPath()
+  c_curve(context, depth, 400, 250, 400, 550)
+  context.stroke()
+}
+
 document.addEventListener('readystatechange', e => {
   if (document.readyState !== 'interactive') {
     return
   }
+  const form = <HTMLFormElement>document.querySelector('#depth-form')
+  const submitButton = form.querySelector('button')
+  const input = <HTMLInputElement>document.querySelector('#depth')
+  let isDrawing = false
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    if (isDrawing) {
+      return
+    }
 
-  var canvas = <HTMLCanvasElement>document.getElementById('plot')
-  var context = canvas.getContext('2d')
-  canvas.width = 800
-  canvas.height = 800
-  context.beginPath()
-  c_curve(context, 17, 400, 250, 400, 550)
-  context.stroke()
+    const depth = +input.value
+    if (isNaN(depth)) {
+      alert('Depth should be a number!')
+      return
+    }
+    submitButton.setAttribute('disabled', 'disabled')
+    isDrawing = true
+    draw(depth)
+    submitButton.removeAttribute('disabled')
+    isDrawing = false
+  })
 })
