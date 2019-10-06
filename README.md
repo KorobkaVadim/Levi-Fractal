@@ -1,9 +1,9 @@
 # Electron Levi Fractal
 ```bash
 # Clone this repository
-git clone https://github.com/KorobkaVadim/electron-quick-start-typescript
+git clone https://github.com/KorobkaVadim/Levi-Fractal.git
 # Go into the repository
-cd electron-quick-start-typescript
+cd Levi-Fractal
 # Install dependencies
 npm install
 # Run the app
