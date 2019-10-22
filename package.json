@@ -6,7 +6,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "npm run build && electron ./build/main.js",
+    "dist": "electron-builder"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
@@ -19,9 +20,16 @@
   ],
   "author": "GitHub",
   "license": "CC0-1.0",
+  "build": {
+    "appId": "test.test.test",
+    "mac": {
+      "category": "your.app.category.type"
+    }
+  },
   "devDependencies": {
     "electron": "^6.0.8",
     "tslint": "^5.19.0",
-    "typescript": "^3.6.0"
+    "typescript": "^3.6.0",
+    "electron-builder": "^21.2.0"
   }
 }

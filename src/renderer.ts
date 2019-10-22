@@ -8,6 +8,19 @@ const BASE_ANGLE = (45 * Math.PI) / 180
 const COS_OF_BASE_ANGLE = Math.cos(BASE_ANGLE)
 const SIN_OF_BASE_ANGLE = Math.sin(BASE_ANGLE)
 
+const drowLevy = (context: CanvasRenderingContext2D, depth: number, x1: number, y1: number, x2: number, y2: number) => {
+  if (depth == 0) {
+    context.moveTo(x1, y1)
+    context.strokeStyle = `#${getRandomIntInclusive().toString(16)}`
+    context.lineTo(x2, y2)
+  } else {
+    const x3 = (x1 + x2) / 2 - (y2 - y1) / 2
+    const y3 = (y1 + y2) / 2 + (x2 - x1) / 2
+    drowLevy(context, depth - 1, x1, y1, x3, y3)
+    drowLevy(context, depth - 1, x3, y3, x2, y2)
+  }
+}
+
 const c_curve = (context: CanvasRenderingContext2D, depth: number, x0: number, y0: number, x1: number, y1: number) => {
   if (depth <= 0) {
     context.moveTo(x0, y0)
@@ -34,7 +47,13 @@ const draw = (depth: number) => {
   canvas.width = 800
   canvas.height = 800
   context.beginPath()
-  c_curve(context, depth, 400, 250, 400, 550)
+  const selected = Array.from(document.querySelectorAll('input[name="curve"]')).find((i: any) => i.checked)
+  console.log(selected)
+  if (selected.getAttribute('id') === 'curve_line') {
+    c_curve(context, depth, 400, 250, 400, 550)
+  } else {
+    drowLevy(context, depth, 600, 650, 200, 650)
+  }
   context.stroke()
 }
 

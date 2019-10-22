@@ -12,7 +12,11 @@
   <body>
     <form id="depth-form">
       <label for="depth">Depth of recursion</label>
-      <input type="number" id="depth" value="17" min="5" max="20" placeholder="Depth of recursion" />
+      <input type="number" id="depth" value="17" min="2" max="20" placeholder="Depth of recursion" />
+      <input type="radio" checked name="curve" id="curve_cube" />
+      <label for="curve_cube">Curve Cube</label>
+      <input type="radio" name="curve" id="curve_line" />
+      <label for="curve_line">Curve Line</label>
       <button type="submit">Draw</button>
     </form>
     <canvas id="plot"></canvas>
